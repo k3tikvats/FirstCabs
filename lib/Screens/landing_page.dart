@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import '../widgets/widgets.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<LandingPage> createState() => LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class LandingPageState extends State<LandingPage> {
   // Controller to manage the search bar input
   TextEditingController searchController = TextEditingController();
 
-  // Example: List of destinations (this could come from an API later)
+    // Bottom navigation active index
+  int _selectedIndex = 0;
+
+  // Function to handle bottom navigation bar taps
+  void _onNavItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   final List<String> destinations = [
     "Indira Gandhi International Airport",
     "Rohini Sector 18,19",
@@ -62,7 +72,7 @@ class _LandingPageState extends State<LandingPage> {
                         print("Search Query: $value");
                       },
                       decoration: InputDecoration(
-                        hintText: 'Type Your Destination',
+                        hintText: 'Current Location',
                         prefixIcon: Icon(Icons.search, color: Colors.grey),
                         suffixIcon: searchController.text.isNotEmpty
                             ? IconButton(
@@ -83,70 +93,71 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
           SizedBox(width: 20,),
-          Container(
-            height: 180,
-            padding: EdgeInsets.symmetric(horizontal: 8.0), 
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                // Ad 1
-                Container(
-                  width: 300,
-                  margin: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('lib/assets/ad1.png'), 
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Ad 2
-                Container(
-                  width: 300,
-                  margin: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('lib/assets/ad2.png'), 
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Ad 3
-                Container(
-                  width: 300,
-                  margin: EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: AssetImage('lib/assets/ad3.png'), 
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 5,),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(width: 5,),
-              Text("Suggestions",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),),
-            ],
-          ),
-          SizedBox(height: 4,),
-          Padding(
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            child: Image.asset("lib/assets/cab.png"),
-          ),
 
-          Column(
+           // Advertisement Section (Scrollable Ads)
+          Container(
+              height: 180,
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  buildAdCard('lib/assets/ad1.png'),
+                  buildAdCard('lib/assets/ad2.png'),
+                  buildAdCard('lib/assets/ad3.png'),
+                ],
+              ),
+            ),
+
+          const SizedBox(height: 10),
+
+           // Suggestions Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Suggestions",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // Horizontal Tiles (Cab, Coming Soon)
+           SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  // Use the SuggestionTile widget
+                  SuggestionTile(
+                    imagePath: 'lib/assets/cab.png',
+                    title: "Cab",
+                  ),
+                  SuggestionTile(
+                    imagePath: '',
+                    title: "Coming Soon",
+                    isComingSoon: true,
+                  ),
+                  SuggestionTile(
+                    imagePath: '',
+                    title: "Coming Soon",
+                    isComingSoon: true,
+                  ),
+                  SuggestionTile(
+                    imagePath: '',
+                    title: "Coming Soon",
+                    isComingSoon: true,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Search Destination Section
+            Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Search Destination Bar
@@ -199,7 +210,6 @@ class _LandingPageState extends State<LandingPage> {
             ),
           ),
         ),
-
         const SizedBox(height: 16),
 
         // Destination List
@@ -221,12 +231,104 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ],
       ),
+        
+     
+           
+          
+        ],
+      ),
+       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onNavItemTapped,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.miscellaneous_services),
+            label: "Services",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: "Activity",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: "Account",
+          ),
         ],
       ),
       
-        
+    
+    );
+    
+  }
+  
+   // Widget for ad cards
+  Widget buildAdCard(String assetPath) {
+    return Container(
+      width: 300,
+      margin: const EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+          image: AssetImage(assetPath),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
+
+  // // Widget for suggestion tiles
+  // Widget buildSuggestionTile(String imagePath, String title) {
+  //   return Container(
+  //     width: 100,
+  //     margin: const EdgeInsets.only(left: 16),
+  //     child: Column(
+  //       children: [
+  //         Image.asset(imagePath, height: 60, width: 60),
+  //         const SizedBox(height: 5),
+  //         Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  // // Widget for Coming Soon tiles
+  // Widget buildComingSoonTile(String title) {
+  //   return Container(
+  //     width: 100,
+  //     margin: const EdgeInsets.only(left: 16),
+  //     decoration: BoxDecoration(
+  //       color: Colors.grey.shade300,
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     child: Center(
+  //       child: Text(
+  //         title,
+  //         textAlign: TextAlign.center,
+  //         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget for suggested destinations
+  Widget buildDestinationItem(String title) {
+    return ListTile(
+      leading: const Icon(Icons.location_on, color: Colors.grey),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      onTap: () {
+        print("Selected Destination: $title");
+      },
+    );
+  }
+
 }
 
 
