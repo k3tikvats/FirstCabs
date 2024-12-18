@@ -11,6 +11,13 @@ class _LandingPageState extends State<LandingPage> {
   // Controller to manage the search bar input
   TextEditingController searchController = TextEditingController();
 
+  // Example: List of destinations (this could come from an API later)
+  final List<String> destinations = [
+    "Indira Gandhi International Airport",
+    "Rohini Sector 18,19",
+    "HUDA City Centre Metro Station"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,9 +144,124 @@ class _LandingPageState extends State<LandingPage> {
           Padding(
             padding: const EdgeInsets.only(left: 5, right: 5),
             child: Image.asset("lib/assets/cab.png"),
-          )
+          ),
+
+          Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Search Destination Bar
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.search, color: Colors.grey),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: searchController,
+                    decoration: const InputDecoration(
+                      hintText: 'Search Destination',
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                    onChanged: (value) {
+                      // Placeholder: You can filter/search results here
+                      print("Search query: $value");
+                    },
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Add functionality for "Later" button
+                    print("Later button pressed");
+                  },
+                  icon: const Icon(Icons.watch_later, size: 18),
+                  label: const Text("Later"),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    textStyle: const TextStyle(fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Destination List
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: destinations.map((destination) => Column(
+                      children: [
+                        DestinationItem(
+                          title: destination,
+                          icon: Icons.location_pin,
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                    ))
+                .toList(),
+          ),
+        ),
+      ],
+      ),
         ],
       ),
+      
+        
+    );
+  }
+}
+
+
+
+class DestinationItem extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const DestinationItem({
+    Key? key,
+    required this.title,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: Colors.grey,
+          size: 24,
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+      ],
     );
   }
 }
