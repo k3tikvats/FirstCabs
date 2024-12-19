@@ -5,7 +5,7 @@ class AdItem extends StatelessWidget {
   final String title;
   final String imageUrl;
 
-  const AdItem({Key? key, required this.title, required this.imageUrl}) : super(key: key);
+  const AdItem({super.key, required this.title, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

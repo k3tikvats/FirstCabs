@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>IOGoogleMapsAPIKey</key>
+	<string>AIzaSyB8ktFpX6ItlkEAIXk_EPEAiLD_bS0OjFs</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location while it's open to provide location-based services.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to your location even when it's not open to provide background location-based services.</string>
 </dict>
 </plist>

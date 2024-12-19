@@ -1,3 +1,4 @@
+import 'package:firstcabs/Screens/pages/destination_page.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/widgets.dart';
 
@@ -10,9 +11,10 @@ class LandingPage extends StatefulWidget {
 
 class LandingPageState extends State<LandingPage> {
   // Controller to manage the search bar input
-  TextEditingController searchController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController destinationController = TextEditingController();
 
-    // Bottom navigation active index
+  // Bottom navigation active index
   int _selectedIndex = 0;
 
   // Function to handle bottom navigation bar taps
@@ -38,18 +40,19 @@ class LandingPageState extends State<LandingPage> {
         title: Row(
           children: [
             Image.asset(
-              'lib/assets/logo.png',
+              'lib/assets/icons/logo.png',
               height: 36,
               width: 168,
             ),
           ],
         ),
-        centerTitle: true, 
+        centerTitle: true,
       ),
       body: Column(
-        children: [  
+        children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -59,7 +62,7 @@ class LandingPageState extends State<LandingPage> {
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -67,24 +70,24 @@ class LandingPageState extends State<LandingPage> {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: searchController,
+                      controller: locationController,
                       onChanged: (value) {
                         print("Search Query: $value");
                       },
                       decoration: InputDecoration(
                         hintText: 'Current Location',
-                        prefixIcon: Icon(Icons.search, color: Colors.grey),
-                        suffixIcon: searchController.text.isNotEmpty
+                        prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                        suffixIcon: locationController.text.isNotEmpty
                             ? IconButton(
-                                icon: Icon(Icons.clear, color: Colors.grey),
+                                icon: const Icon(Icons.clear, color: Colors.grey),
                                 onPressed: () {
-                                  searchController.clear();
+                                  locationController.clear();
                                   setState(() {});
                                 },
                               )
                             : null,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(10),
+                        contentPadding: const EdgeInsets.all(10),
                       ),
                     ),
                   ),
@@ -92,152 +95,160 @@ class LandingPageState extends State<LandingPage> {
               ),
             ),
           ),
-          SizedBox(width: 20,),
+          const SizedBox(
+            width: 20,
+          ),
 
-           // Advertisement Section (Scrollable Ads)
+          // Advertisement Section (Scrollable Ads)
           Container(
-              height: 180,
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  buildAdCard('lib/assets/ad1.png'),
-                  buildAdCard('lib/assets/ad2.png'),
-                  buildAdCard('lib/assets/ad3.png'),
-                ],
-              ),
+            height: 180,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                buildAdCard('lib/assets/images/ad1.png'),
+                buildAdCard('lib/assets/images/ad2.png'),
+                buildAdCard('lib/assets/images/ad3.png'),
+              ],
             ),
+          ),
 
           const SizedBox(height: 10),
 
-           // Suggestions Section
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Suggestions",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            // Horizontal Tiles (Cab, Coming Soon)
-           SizedBox(
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: const [
-                  // Use the SuggestionTile widget
-                  SuggestionTile(
-                    imagePath: 'lib/assets/cab.png',
-                    title: "Cab",
-                  ),
-                  SuggestionTile(
-                    imagePath: '',
-                    title: "Coming Soon",
-                    isComingSoon: true,
-                  ),
-                  SuggestionTile(
-                    imagePath: '',
-                    title: "Coming Soon",
-                    isComingSoon: true,
-                  ),
-                  SuggestionTile(
-                    imagePath: '',
-                    title: "Coming Soon",
-                    isComingSoon: true,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Search Destination Section
-            Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Search Destination Bar
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
+          // Suggestions Section
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.search, color: Colors.grey),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search Destination',
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                    onChanged: (value) {
-                      // Placeholder: You can filter/search results here
-                      print("Search query: $value");
-                    },
-                  ),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Add functionality for "Later" button
-                    print("Later button pressed");
-                  },
-                  icon: const Icon(Icons.watch_later, size: 18),
-                  label: const Text("Later"),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    textStyle: const TextStyle(fontSize: 12),
-                  ),
+                Text(
+                  "Suggestions",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
-        ),
-        const SizedBox(height: 16),
+          const SizedBox(height: 8),
 
-        // Destination List
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: destinations.map((destination) => Column(
-                      children: [
-                        DestinationItem(
-                          title: destination,
-                          icon: Icons.location_pin,
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-                    ))
-                .toList(),
+          // Horizontal Tiles (Cab, Coming Soon)
+          SizedBox(
+            height: 100,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: const [
+                // Use the SuggestionTile widget
+                SuggestionTile(
+                  imagePath: 'lib/assets/icons/cab.png',
+                  title: "Cab",
+                ),
+                SuggestionTile(
+                  imagePath: '',
+                  title: "Coming Soon",
+                  isComingSoon: true,
+                ),
+                SuggestionTile(
+                  imagePath: '',
+                  title: "Coming Soon",
+                  isComingSoon: true,
+                ),
+                SuggestionTile(
+                  imagePath: '',
+                  title: "Coming Soon",
+                  isComingSoon: true,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-      ),
-        
-     
-           
-          
+          const SizedBox(height: 10),
+
+          // Search Destination Section
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Search Destination Bar
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.search, color: Colors.grey),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: destinationController,
+                          decoration: const InputDecoration(
+                            hintText: 'Search Destination',
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(color: Colors.grey),
+                          ),
+                          onChanged: (value) {
+                            // Placeholder: You can filter/search results here
+                            print("Search query: $value");
+                          },
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const DestinationPage()),
+                            );
+                          },
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          // Add functionality for "Later" button
+                          print("Later button pressed");
+                        },
+                        icon: const Icon(Icons.watch_later, size: 18),
+                        label: const Text("Later"),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
+                          textStyle: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Destination List
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: destinations
+                      .map((destination) => Column(
+                            children: [
+                              DestinationItem(
+                                title: destination,
+                                icon: Icons.location_pin,
+                              ),
+                              const SizedBox(height: 12),
+                            ],
+                          ))
+                      .toList(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
-       bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onNavItemTapped,
         selectedItemColor: Colors.black,
@@ -245,30 +256,27 @@ class LandingPageState extends State<LandingPage> {
         showUnselectedLabels: true,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.miscellaneous_services),
+            icon: Icon(Icons.grid_view),
             label: "Services",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
+            icon: Icon(Icons.directions_car_outlined),
             label: "Activity",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.person_outline),
             label: "Account",
           ),
         ],
       ),
-      
-    
     );
-    
   }
-  
-   // Widget for ad cards
+
+  // Widget for ad cards
   Widget buildAdCard(String assetPath) {
     return Container(
       width: 300,
@@ -322,26 +330,24 @@ class LandingPageState extends State<LandingPage> {
     return ListTile(
       leading: const Icon(Icons.location_on, color: Colors.grey),
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      trailing:
+          const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
       onTap: () {
         print("Selected Destination: $title");
       },
     );
   }
-
 }
-
-
 
 class DestinationItem extends StatelessWidget {
   final String title;
   final IconData icon;
 
   const DestinationItem({
-    Key? key,
+    super.key,
     required this.title,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -12,14 +12,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       
       debugShowCheckedModeBanner: false,
-      title:'Shopping App',
+      title:'Cab Booking App',
         theme: ThemeData(
           fontFamily: 'Lato',
           colorScheme: ColorScheme.fromSeed(
-            seedColor:Color.fromARGB(255, 255, 255, 255),
-            primary: Color.fromARGB(255, 255, 255, 255),
+            seedColor:const Color.fromARGB(255, 255, 255, 255),
+            primary: const Color.fromARGB(255, 255, 255, 255),
           ),
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             
             titleTextStyle: TextStyle(
               fontSize: 20,
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             ),
             prefixIconColor: Color.fromRGBO(119,119,119,1),
           ),
-          textTheme: TextTheme(
+          textTheme: const TextTheme(
             titleLarge: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
     
-        home: LandingPage(),
+        home: const LandingPage(),
     
     );
   }

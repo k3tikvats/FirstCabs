@@ -6,11 +6,11 @@ class SuggestionTile extends StatelessWidget {
   final bool isComingSoon;
 
   const SuggestionTile({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.title,
     this.isComingSoon = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
