@@ -1,3 +1,3 @@
 
-export 'suggestions_item.dart';
-export 'ad_item.dart';
+export 'features/suggestions_item.dart';
+export 'features/ad_item.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/widgets.dart';
+import '../../widgets/widgets.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});

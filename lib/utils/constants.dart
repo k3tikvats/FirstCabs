@@ -1,0 +1,1 @@
+//can keep constants here-hegith, width, padding, margin, color, etc

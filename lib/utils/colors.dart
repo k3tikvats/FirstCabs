@@ -1,0 +1,1 @@
+//create a class and define all the static colors
