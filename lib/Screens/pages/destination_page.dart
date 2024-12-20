@@ -10,7 +10,11 @@ class DestinationPage extends StatefulWidget {
 
 class _DestinationPageState extends State<DestinationPage> {
   final TextEditingController _endPointController = TextEditingController();
-
+  final List<String> destinations = [
+    "Indira Gandhi International Airport",
+    "Rohini Sector 18,19",
+    "HUDA City Centre Metro Station"
+  ];
   final List<RecentSearch> _recentSearches = [
     RecentSearch(
       title: "Indira Gandhi International Airport",
@@ -21,12 +25,12 @@ class _DestinationPageState extends State<DestinationPage> {
       subtitle: "Samaypur Badli daulatpur, Rohini Sector 18...",
     ),
     RecentSearch(
-      title: "HUDA City Centre Metro Station",
-      subtitle: "Gurgaon - Delhi Expy, Sector 29, Gurugram...",
+      title: "Huda City Centre Metro",
+      subtitle: "Shalimar Huda City Center, Sector 29, New Delhi, Gurugram, Haryana 122007",
     ),
     RecentSearch(
-      title: "HUDA City Centre Metro Station",
-      subtitle: "Gurgaon - Delhi Expy, Sector 29, Gurugram...",
+      title: "Sadar Bazaar",
+      subtitle: "Ring Rd, West Punjabi Bagh, Punjabi Bagh, New Delhi, Delhi, 110026",
     ),
   ];
 
@@ -195,6 +199,12 @@ class _DestinationPageState extends State<DestinationPage> {
                     style: const TextStyle(color: Colors.grey),
                   ),
                   onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapPage(startPoint:'Delhi Technological University',endPoint: _recentSearches[index].title),
+                        ),
+                      );
                   },
                 );
               },

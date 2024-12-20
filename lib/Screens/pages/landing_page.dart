@@ -1,4 +1,6 @@
 import 'package:firstcabs/Screens/pages/destination_page.dart';
+import 'package:firstcabs/Screens/pages/map_page.dart';
+import 'package:firstcabs/widgets/features/destination_item.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/widgets.dart';
 
@@ -48,205 +50,218 @@ class LandingPageState extends State<LandingPage> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: locationController,
-                      onChanged: (value) {
-                        print("Search Query: $value");
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Current Location',
-                        prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                        suffixIcon: locationController.text.isNotEmpty
-                            ? IconButton(
-                                icon: const Icon(Icons.clear, color: Colors.grey),
-                                onPressed: () {
-                                  locationController.clear();
-                                  setState(() {});
-                                },
-                              )
-                            : null,
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.all(10),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: locationController,
+                        onChanged: (value) {
+                          print("Search Query: $value");
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Current Location',
+                          prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                          suffixIcon: locationController.text.isNotEmpty
+                              ? IconButton(
+                                  icon: const Icon(Icons.clear, color: Colors.grey),
+                                  onPressed: () {
+                                    locationController.clear();
+                                    setState(() {});
+                                  },
+                                )
+                              : null,
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.all(10),
+                        ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+        
+            // Advertisement Section (Scrollable Ads)
+            Container(
+              height: 180,
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  buildAdCard('lib/assets/images/ad1.png'),
+                  buildAdCard('lib/assets/images/ad2.png'),
+                  buildAdCard('lib/assets/images/ad3.png'),
+                ],
+              ),
+            ),
+        
+            const SizedBox(height: 10),
+        
+            // Suggestions Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Suggestions",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
             ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-
-          // Advertisement Section (Scrollable Ads)
-          Container(
-            height: 180,
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                buildAdCard('lib/assets/images/ad1.png'),
-                buildAdCard('lib/assets/images/ad2.png'),
-                buildAdCard('lib/assets/images/ad3.png'),
-              ],
+            const SizedBox(height: 8),
+        
+            // Horizontal Tiles (Cab, Coming Soon)
+            SizedBox(
+              height: 100,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const [
+                  // Use the SuggestionTile widget
+                  SuggestionTile(
+                    imagePath: 'lib/assets/icons/cab.png',
+                    title: "Cab",
+                  ),
+                  SuggestionTile(
+                    imagePath: '',
+                    title: "Coming Soon",
+                    isComingSoon: true,
+                  ),
+                  SuggestionTile(
+                    imagePath: '',
+                    title: "Coming Soon",
+                    isComingSoon: true,
+                  ),
+                  SuggestionTile(
+                    imagePath: '',
+                    title: "Coming Soon",
+                    isComingSoon: true,
+                  ),
+                ],
+              ),
             ),
-          ),
-
-          const SizedBox(height: 10),
-
-          // Suggestions Section
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
+            const SizedBox(height: 10),
+        
+            // Search Destination Section
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Suggestions",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-
-          // Horizontal Tiles (Cab, Coming Soon)
-          SizedBox(
-            height: 100,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                // Use the SuggestionTile widget
-                SuggestionTile(
-                  imagePath: 'lib/assets/icons/cab.png',
-                  title: "Cab",
-                ),
-                SuggestionTile(
-                  imagePath: '',
-                  title: "Coming Soon",
-                  isComingSoon: true,
-                ),
-                SuggestionTile(
-                  imagePath: '',
-                  title: "Coming Soon",
-                  isComingSoon: true,
-                ),
-                SuggestionTile(
-                  imagePath: '',
-                  title: "Coming Soon",
-                  isComingSoon: true,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-
-          // Search Destination Section
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Destination Bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.search, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: TextField(
-                          controller: destinationController,
-                          decoration: const InputDecoration(
-                            hintText: 'Search Destination',
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(color: Colors.grey),
+                // Search Destination Bar
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.search, color: Colors.grey),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextField(
+                            controller: destinationController,
+                            decoration: const InputDecoration(
+                              hintText: 'Search Destination',
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(color: Colors.grey),
+                            ),
+                            onChanged: (value) {
+                              // Placeholder: You can filter/search results here
+                              print("Search query: $value");
+                            },
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DestinationPage()),
+                              );
+                            },
                           ),
-                          onChanged: (value) {
-                            // Placeholder: You can filter/search results here
-                            print("Search query: $value");
-                          },
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const DestinationPage()),
-                            );
-                          },
                         ),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          // Add functionality for "Later" button
-                          print("Later button pressed");
-                        },
-                        icon: const Icon(Icons.watch_later, size: 18),
-                        label: const Text("Later"),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          textStyle: const TextStyle(fontSize: 12),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            // Add functionality for "Later" button
+                            print("Later button pressed");
+                          },
+                          icon: const Icon(Icons.watch_later, size: 18),
+                          label: const Text("Later"),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            textStyle: const TextStyle(fontSize: 12),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-
-              // Destination List
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: destinations
-                      .map((destination) => Column(
-                            children: [
-                              DestinationItem(
-                                title: destination,
-                                icon: Icons.location_pin,
-                              ),
-                              const SizedBox(height: 12),
-                            ],
-                          ))
-                      .toList(),
+                const SizedBox(height: 16),
+        
+                // Destination List
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: destinations
+                        .map((destination){
+                        return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapPage(startPoint:'Delhi Technological University',endPoint: destination),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            DestinationItem(
+                              title: destination,
+                              icon: Icons.location_pin,
+                            ),
+                            const SizedBox(height: 12),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -339,37 +354,4 @@ class LandingPageState extends State<LandingPage> {
   }
 }
 
-class DestinationItem extends StatelessWidget {
-  final String title;
-  final IconData icon;
 
-  const DestinationItem({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: Colors.grey,
-          size: 24,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
-      ],
-    );
-  }
-}
