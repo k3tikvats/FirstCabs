@@ -29,7 +29,7 @@ class _DestinationPageState extends State<DestinationPage> {
       subtitle: "Shalimar Huda City Center, Sector 29, New Delhi, Gurugram, Haryana 122007",
     ),
     RecentSearch(
-      title: "Sadar Bazaar",
+      title: "Punjabi Bagh",
       subtitle: "Ring Rd, West Punjabi Bagh, Punjabi Bagh, New Delhi, Delhi, 110026",
     ),
   ];

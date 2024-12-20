@@ -197,7 +197,6 @@ class LandingPageState extends State<LandingPage> {
                               hintStyle: TextStyle(color: Colors.grey),
                             ),
                             onChanged: (value) {
-                              // Placeholder: You can filter/search results here
                               print("Search query: $value");
                             },
                             onTap: () {
