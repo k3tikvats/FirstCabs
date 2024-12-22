@@ -50,7 +50,7 @@ class _MapPageState extends State<MapPage> {
           ) /
           1000;
       setState(() {
-        estimatedFare = distanceInKm * 10; // Example calculation
+        estimatedFare = (50 + 20 + distanceInKm * 10)*1.2;
       });
     } catch (e) {
       print('Error getting directions: $e');
@@ -63,7 +63,12 @@ class _MapPageState extends State<MapPage> {
     } else if (address.toLowerCase().contains('rohini')) {
       return LatLng(28.7362, 77.1234);
     }
-    // Use real API or package to fetch LatLng
+    else if (address.toLowerCase().contains('huda city')) {
+      return LatLng(28.4592, 77.0725);
+    } else if (address.toLowerCase().contains('punjabi bagh')) {
+      return LatLng(28.6620, 77.1242);
+    }
+
     return LatLng(28.7041, 77.1025); // Default for Delhi
   }
 
