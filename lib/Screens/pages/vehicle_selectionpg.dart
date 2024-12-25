@@ -1,3 +1,4 @@
+import 'package:firstcabs/Screens/pages/watchAd.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -7,7 +8,8 @@ class MapPage extends StatefulWidget {
   final String startPoint;
   final String endPoint;
 
-  const MapPage({required this.startPoint, required this.endPoint, Key? key}) : super(key: key);
+  const MapPage({required this.startPoint, required this.endPoint, Key? key})
+      : super(key: key);
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -22,11 +24,36 @@ class _MapPageState extends State<MapPage> {
   int _selectedVehicleIndex = 0;
 
   final List<Map<String, String>> vehicles = [
-    {'type': 'Mini', 'desc': 'Compact mini', 'price': '₹500.94', 'time': '13 min away'},
-    {'type': 'Sedan', 'desc': 'Affordable sedan', 'price': '₹500.94', 'time': '13 min away'},
-    {'type': 'SUV', 'desc': 'Comfortable SUV', 'price': '₹500.94', 'time': '13 min away'},
-    {'type': 'XUV', 'desc': 'Spacious XUV', 'price': '₹500.94', 'time': '13 min away'},
-    {'type': 'Go Rental', 'desc': 'Sedan, Mini, SUV', 'price': '₹500.94', 'time': '13 min away'},
+    {
+      'type': 'Mini',
+      'desc': 'Compact mini',
+      'price': '₹500.94',
+      'time': '13 min away'
+    },
+    {
+      'type': 'Sedan',
+      'desc': 'Affordable sedan',
+      'price': '₹500.94',
+      'time': '13 min away'
+    },
+    {
+      'type': 'SUV',
+      'desc': 'Comfortable SUV',
+      'price': '₹500.94',
+      'time': '13 min away'
+    },
+    {
+      'type': 'XUV',
+      'desc': 'Spacious XUV',
+      'price': '₹500.94',
+      'time': '13 min away'
+    },
+    {
+      'type': 'Go Rental',
+      'desc': 'Sedan, Mini, SUV',
+      'price': '₹500.94',
+      'time': '13 min away'
+    },
   ];
 
   @override
@@ -41,18 +68,21 @@ class _MapPageState extends State<MapPage> {
       LatLng endLatLng = await _getLatLngFromAddress(widget.endPoint);
 
       setState(() {
-        _markers.add(Marker(markerId: const MarkerId('start'), position: startLatLng));
-        _markers.add(Marker(markerId: const MarkerId('end'), position: endLatLng));
+        _markers.add(
+            Marker(markerId: const MarkerId('start'), position: startLatLng));
+        _markers
+            .add(Marker(markerId: const MarkerId('end'), position: endLatLng));
       });
 
       await _fetchRoute(startLatLng, endLatLng);
 
       double distanceInKm = Geolocator.distanceBetween(
-        startLatLng.latitude,
-        startLatLng.longitude,
-        endLatLng.latitude,
-        endLatLng.longitude,
-      ) / 1000;
+            startLatLng.latitude,
+            startLatLng.longitude,
+            endLatLng.latitude,
+            endLatLng.longitude,
+          ) /
+          1000;
       setState(() {
         estimatedFare = (50 + 20 + distanceInKm * 10) * 1.2;
       });
@@ -60,13 +90,13 @@ class _MapPageState extends State<MapPage> {
       print('Error getting directions: $e');
     }
   }
+
   Future<LatLng> _getLatLngFromAddress(String address) async {
     if (address.toLowerCase().contains('indira gandhi')) {
       return LatLng(28.5562, 77.1000);
     } else if (address.toLowerCase().contains('rohini')) {
       return LatLng(28.7362, 77.1234);
-    }
-    else if (address.toLowerCase().contains('huda city')) {
+    } else if (address.toLowerCase().contains('huda city')) {
       return LatLng(28.4592, 77.0725);
     } else if (address.toLowerCase().contains('punjabi bagh')) {
       return LatLng(28.6620, 77.1242);
@@ -85,22 +115,23 @@ class _MapPageState extends State<MapPage> {
     );
 
     if (result.status == 'OK') {
-    print('Route Points: ${result.points}');
-    setState(() {
-      _polylineCoordinates =
-          result.points.map((point) => LatLng(point.latitude, point.longitude)).toList();
-      _polylines.add(
-        Polyline(
-          polylineId: const PolylineId('route'),
-          color: Colors.blue,
-          width: 5,
-          points: _polylineCoordinates,
-        ),
-      );
-    });
-  } else {
-    print('Error fetching route: ${result.errorMessage}');
-  }
+      print('Route Points: ${result.points}');
+      setState(() {
+        _polylineCoordinates = result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList();
+        _polylines.add(
+          Polyline(
+            polylineId: const PolylineId('route'),
+            color: Colors.blue,
+            width: 5,
+            points: _polylineCoordinates,
+          ),
+        );
+      });
+    } else {
+      print('Error fetching route: ${result.errorMessage}');
+    }
   }
 
   @override
@@ -133,12 +164,14 @@ class _MapPageState extends State<MapPage> {
                 ),
                 const SizedBox(width: 12),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.black,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text('You', style: TextStyle(color: Colors.white)),
+                  child:
+                      const Text('You', style: TextStyle(color: Colors.white)),
                 ),
               ],
             ),
@@ -158,7 +191,8 @@ class _MapPageState extends State<MapPage> {
                       padding: EdgeInsets.all(16),
                       child: Text(
                         'Choose your vehicle',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Padding(
@@ -192,27 +226,42 @@ class _MapPageState extends State<MapPage> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(vehicle['price']!,
-                                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
                                 Text(vehicle['time']!,
-                                    style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+                                    style: TextStyle(
+                                        color: Colors.grey[600], fontSize: 12)),
                               ],
                             ),
                           );
                         },
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      color: Colors.green,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const WatchAd()),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Icon(Icons.play_circle_outline, color: Colors.white),
                           SizedBox(width: 8),
-                          Text('Save 10% by watching ads',
+                          Text('Save 5% by watching ads',
                               style: TextStyle(color: Colors.white)),
                           SizedBox(width: 8),
-                          Icon(Icons.info_outline, color: Colors.white, size: 16),
+                          Icon(Icons.info_outline,
+                              color: Colors.white, size: 16),
                         ],
                       ),
                     ),
@@ -222,8 +271,10 @@ class _MapPageState extends State<MapPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           _buildPaymentOption(Icons.payments_outlined, 'Cash'),
-                          _buildPaymentOption(Icons.account_balance_wallet_outlined, 'UPI'),
-                          _buildPaymentOption(Icons.confirmation_number_outlined, 'Coupon'),
+                          _buildPaymentOption(
+                              Icons.account_balance_wallet_outlined, 'UPI'),
+                          _buildPaymentOption(
+                              Icons.confirmation_number_outlined, 'Coupon'),
                         ],
                       ),
                     ),
@@ -275,6 +326,4 @@ class _MapPageState extends State<MapPage> {
       ],
     );
   }
-
-  // Keep your existing _getLatLngFromAddress and _fetchRoute methods
 }
