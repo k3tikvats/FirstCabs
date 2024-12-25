@@ -22,36 +22,39 @@ class _MapPageState extends State<MapPage> {
   List<LatLng> _polylineCoordinates = [];
   double? estimatedFare;
   int _selectedVehicleIndex = 0;
+  bool applyDiscount = false;
+  bool showGreenButton = true;
+  
 
   final List<Map<String, String>> vehicles = [
     {
       'type': 'Mini',
       'desc': 'Compact mini',
-      'price': '₹500.94',
+      'price': '500.94',
       'time': '13 min away'
     },
     {
       'type': 'Sedan',
       'desc': 'Affordable sedan',
-      'price': '₹500.94',
+      'price': '500.94',
       'time': '13 min away'
     },
     {
       'type': 'SUV',
       'desc': 'Comfortable SUV',
-      'price': '₹500.94',
+      'price': '500.94',
       'time': '13 min away'
     },
     {
       'type': 'XUV',
       'desc': 'Spacious XUV',
-      'price': '₹500.94',
+      'price': '500.94',
       'time': '13 min away'
     },
     {
       'type': 'Go Rental',
       'desc': 'Sedan, Mini, SUV',
-      'price': '₹500.94',
+      'price': '500.94',
       'time': '13 min away'
     },
   ];
@@ -85,6 +88,16 @@ class _MapPageState extends State<MapPage> {
           1000;
       setState(() {
         estimatedFare = (50 + 20 + distanceInKm * 10) * 1.2;
+        vehicles[0]['price'] =
+            estimatedFare != null ? estimatedFare!.toStringAsFixed(2) : 'N/A';
+        vehicles[1]['price'] =
+            estimatedFare != null ? estimatedFare!.toStringAsFixed(2) : 'N/A';
+        vehicles[2]['price'] =
+            estimatedFare != null ? estimatedFare!.toStringAsFixed(2) : 'N/A';
+        vehicles[3]['price'] =
+            estimatedFare != null ? estimatedFare!.toStringAsFixed(2) : 'N/A';
+        vehicles[4]['price'] =
+            estimatedFare != null ? estimatedFare!.toStringAsFixed(2) : 'N/A';
       });
     } catch (e) {
       print('Error getting directions: $e');
@@ -142,7 +155,7 @@ class _MapPageState extends State<MapPage> {
           GoogleMap(
             initialCameraPosition: const CameraPosition(
               target: LatLng(28.7041, 77.1025),
-              zoom: 12,
+              zoom: 10,
             ),
             markers: _markers,
             polylines: _polylines,
@@ -213,6 +226,12 @@ class _MapPageState extends State<MapPage> {
                         controller: scrollController,
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         itemBuilder: (context, index) {
+                          dynamic price = vehicles[index]['price'];
+                          double originalPrice = price is String
+                              ? double.parse(price)
+                              : price as double;
+                          String discountedPrice = (originalPrice * 0.95)
+                              .toStringAsFixed(2); // 5% discount
                           final vehicle = vehicles[index];
                           return ListTile(
                             leading: CircleAvatar(
@@ -225,25 +244,72 @@ class _MapPageState extends State<MapPage> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(vehicle['price']!,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold)),
+                                // Text(vehicle['price']!,
+                                //     style: const TextStyle(
+                                //         fontWeight: FontWeight.bold)),
+                                applyDiscount
+                                    ? RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text:
+                                                  '₹${discountedPrice} ', // Discounted price
+                                              style: TextStyle(
+                                                color: Colors
+                                                    .black, // Regular color for discounted price
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  '(₹${originalPrice})', // Original price with strikethrough
+                                              style: TextStyle(
+                                                color: Colors
+                                                    .grey, // Subtle color for original price
+                                                fontSize: 14,
+                                                decoration: TextDecoration
+                                                    .lineThrough, // Strikethrough
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : Text(
+                                        '₹${originalPrice}', // Regular text for no discount
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
+                                      ),
                                 Text(vehicle['time']!,
                                     style: TextStyle(
                                         color: Colors.grey[600], fontSize: 12)),
                               ],
                             ),
+                            onTap: () {
+                              setState(() {
+                                _selectedVehicleIndex = index;
+                              });
+                            },
                           );
                         },
                       ),
                     ),
+                    if(showGreenButton)
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        // Show the ad screen
+                        bool watchedAd = await Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const WatchAd()),
+                          MaterialPageRoute(builder: (context) => WatchAd()),
                         );
+                        if (watchedAd) {
+                          setState(() {
+                            applyDiscount = true;
+                            showGreenButton = false;
+                          });
+                        }
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
