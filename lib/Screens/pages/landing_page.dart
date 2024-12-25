@@ -4,7 +4,7 @@ import 'package:firstcabs/Screens/pages/vehicle_selectionpg.dart';
 import 'package:firstcabs/widgets/features/destination_item.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/widgets.dart';
-import '../../../assets/;
+
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 
