@@ -1,5 +1,4 @@
 import 'package:firstcabs/Screens/pages/destination_page.dart';
-import 'package:firstcabs/Screens/pages/map_page.dart';
 import 'package:firstcabs/Screens/pages/vehicle_selectionpg.dart';
 import 'package:firstcabs/widgets/features/destination_item.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +38,7 @@ class LandingPageState extends State<LandingPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        elevation: 10,
+        elevation: 100,
         title: Row(
           children: [
             Image.asset(
@@ -263,30 +262,34 @@ class LandingPageState extends State<LandingPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onNavItemTapped,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: "Services",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car_outlined),
-            label: "Activity",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: "Account",
-          ),
-        ],
+      bottomNavigationBar: Material(
+        color: Colors.white,
+        elevation: 10,
+        child: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onNavItemTapped,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined),
+              label: "Home",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.grid_view),
+              label: "Services",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.directions_car_outlined),
+              label: "Activity",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              label: "Account",
+            ),
+          ],
+        ),
       ),
     );
   }
