@@ -1,3 +1,4 @@
+// ignore_for_file: unused_field
 import 'package:firstcabs/Screens/pages/watchAd.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,7 +25,6 @@ class _MapPageState extends State<MapPage> {
   int _selectedVehicleIndex = 0;
   bool applyDiscount = false;
   bool showGreenButton = true;
-  
 
   final List<Map<String, String>> vehicles = [
     {
@@ -296,41 +296,42 @@ class _MapPageState extends State<MapPage> {
                         },
                       ),
                     ),
-                    if(showGreenButton)
-                    TextButton(
-                      onPressed: () async {
-                        // Show the ad screen
-                        bool watchedAd = await Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => WatchAd()),
-                        );
-                        if (watchedAd) {
-                          setState(() {
-                            applyDiscount = true;
-                            showGreenButton = false;
-                          });
-                        }
-                      },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        backgroundColor: Colors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
+                    if (showGreenButton)
+                      TextButton(
+                        onPressed: () async {
+                          // Show the ad screen
+                          bool watchedAd = await Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => WatchAd()),
+                          );
+                          if (watchedAd) {
+                            setState(() {
+                              applyDiscount = true;
+                              showGreenButton = false;
+                            });
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Icon(Icons.play_circle_outline,
+                                color: Colors.white),
+                            SizedBox(width: 8),
+                            Text('Save 5% by watching ads',
+                                style: TextStyle(color: Colors.white)),
+                            SizedBox(width: 8),
+                            Icon(Icons.info_outline,
+                                color: Colors.white, size: 16),
+                          ],
                         ),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.play_circle_outline, color: Colors.white),
-                          SizedBox(width: 8),
-                          Text('Save 5% by watching ads',
-                              style: TextStyle(color: Colors.white)),
-                          SizedBox(width: 8),
-                          Icon(Icons.info_outline,
-                              color: Colors.white, size: 16),
-                        ],
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Row(
@@ -354,7 +355,8 @@ class _MapPageState extends State<MapPage> {
                             backgroundColor: Colors.black,
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
-                          child: const Text('Book Your Ride'),
+                          child: Text('Book Your Ride',
+                          style: TextStyle(color: Colors.white),),
                         ),
                       ),
                     ),

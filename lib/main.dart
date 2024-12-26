@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget {
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           backgroundColor: Colors.white,
           elevation: 20,
-          type: BottomNavigationBarType.fixed, // Add this
-          selectedItemColor: Colors.black, // Add this
-          unselectedItemColor: Colors.grey, // Add this
-          showUnselectedLabels: true, // Add this
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Colors.grey,
+          showUnselectedLabels: true,
         ),
         inputDecorationTheme: const InputDecorationTheme(
           hintStyle: TextStyle(
